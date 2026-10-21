@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --header-height: 68px;
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--header-height) + 64px);
+  }
+
+  body {
+    @apply bg-cream text-night-900 font-sans antialiased;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tight;
+  }
+
+  /* Foco visível e consistente: navegação por teclado é requisito, não detalhe. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-gold-400 ring-offset-2 ring-offset-cream rounded-lg;
+  }
+
+  .dark-section :focus-visible {
+    @apply ring-offset-night-950;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold
+           transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50
+           active:scale-[0.97];
+  }
+
+  .btn-primary {
+    @apply btn bg-gold-400 text-night-950 shadow-lg shadow-gold-500/25
+           hover:bg-gold-300 hover:shadow-gold-500/35;
+  }
+
+  .btn-secondary {
+    @apply btn bg-brand-700 text-cream hover:bg-brand-600;
+  }
+
+  .btn-ghost {
+    @apply btn border border-night-900/15 bg-white/80 text-night-900 hover:border-night-900/30 hover:bg-white;
+  }
+
+  .btn-ghost-dark {
+    @apply btn border border-cream/25 bg-white/5 text-cream hover:border-cream/50 hover:bg-white/10;
+  }
+
+  .btn-lg { @apply h-13 px-7 text-[15px]; min-height: 52px; }
+  .btn-md { @apply h-11 px-5 text-sm; }
+  .btn-sm { @apply h-9 px-4 text-[13px]; }
+
+  .card {
+    @apply rounded-2xl bg-white shadow-card ring-1 ring-night-900/5;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold;
+  }
+
+  /* Trilho de categorias com rolagem horizontal no celular. */
+  .scroll-x {
+    @apply flex gap-2 overflow-x-auto pb-1;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-snap-type: x proximity;
+  }
+  .scroll-x::-webkit-scrollbar { display: none; }
+  .scroll-x > * { scroll-snap-align: start; }
+
+  .skeleton {
+    @apply animate-pulse rounded-xl bg-night-900/[0.07];
+  }
+
+  .link-underline {
+    @apply underline decoration-gold-400/60 decoration-2 underline-offset-4 hover:decoration-gold-400;
+  }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+
+  /* Brilho de forno atrás das fotos em seções escuras. */
+  .oven-glow {
+    background:
+      radial-gradient(60% 55% at 50% 42%, rgba(255, 188, 32, 0.30) 0%, rgba(255, 188, 32, 0) 70%);
+  }
+
+  .safe-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
